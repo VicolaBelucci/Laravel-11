@@ -30,6 +30,17 @@ class TasksTable extends Component
         $this->resetPage();
     }
 
+    public function getStatusTranslation($status)
+    {
+        $translations = [
+            'pending' => 'Pendente',
+            'in_progress' => 'Em Progresso',
+            'completed' => 'Concluída'
+        ];
+
+        return $translations[$status] ?? $status;
+    }
+
     #[On('refresh-table-create')]
     #[On('refresh-table-edit')]
     #[On('refresh-table-delete')]
@@ -52,6 +63,9 @@ class TasksTable extends Component
         }
 
         $tasks = $query->orderByDesc('created_at')->paginate(10);
+        foreach ($tasks as $task) {
+            $task->status = $this->getStatusTranslation($task->status);
+        }
         Sleep::for(500)->milliseconds();
 
         return view('livewire.tasks.tasks-table', [

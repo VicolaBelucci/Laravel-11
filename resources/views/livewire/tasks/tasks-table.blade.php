@@ -13,25 +13,26 @@
         <table class="table-auto ">
             <thead>
                 <tr>
-                    <th class="text-inherit">Titulo</th>
-                    <th>Categoria</th>
-                    <th>Descrição</th>
-                    <th>Data Expiração</th>
-                    <th>Status</th>
-                    <th>Ações</th>
+                    <th class="text-center">Titulo</th>
+                    <th class="text-center">Categoria</th>
+                    <th class="text-center">Descrição</th>
+                    <th class="text-center">Data Expiração</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Ações</th>
 
                   </tr>
             </thead>
     
             <tbody>
                 @forelse($tarefas as $tarefa)
-                    <tr wire:key='task-{{$tarefa->id}}'>
+                    <tr wire:key='task-{{$tarefa->id}}' class="">
                         <td class="px-4 pb-2 text-center">{{$tarefa->title}}</td>
                         <td class="px-4 pb-2 text-center">{{$tarefa->category_title}}</td>
-                        <td class="px-4 pb-2 text-center">{{$tarefa->description}}</td>
-                        <td class="px-4 pb-2 whitespace-nowrap">{{($tarefa->expirationDate)}}</td>
-                        <td class="px-4 pb-2">{{$tarefa->status}}</td>
-                        <td class="px-4 pb-2 flex">
+                        <td class="px-4 pb-2 text-center whitespace-nowrap">{{Str::limit($tarefa->description, 50, '...')}}</td>
+                        <td class="px-4 pb-2 text-center whitespace-nowrap">{{optional(\Carbon\Carbon::parse($tarefa->expirationDate))->format('d/m/Y') ?? '-'}}</td>
+                        <td class="px-4 pb-2 text-center whitespace-nowrap">{{$tarefa->status}}</td>
+                        {{-- @dump($tarefa->status) --}}
+                        <td class="px-4 pb-2 flex justify-center">
                             
                             <a href="#" wire:click.prevent="$dispatch('show-modal', {id: {{$tarefa->id}} })" class="me-3">
                                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -64,7 +65,7 @@
     </div>
     @livewire('tasks.tasks-update')
     @livewire('tasks.tasks-delete')
-    <div>
+    <div class="mt-4 flex justify-center">
         {{ $tarefas->links() }}
     </div>
 </div>

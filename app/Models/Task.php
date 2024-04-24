@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,4 +39,33 @@ class Task extends Model
         return $this->belongsTo(Task::class, 'related_id');
         
     }
+
+    // protected function status(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: fn ($value) => $this->translateStatus($value)  
+    //     );  
+    // }
+
+    public function getStatusAttribute($value)
+    {
+        $statusTranslations = [
+            'pending' => 'Pendente',
+            'in_progress' => 'Em Progresso',
+            'completed' => 'Concluída'
+        ];
+
+        return isset($statusTranslations[$value]) ? $statusTranslations[$value] : $value;
+    }
+
+    // Método para traduzir os valores de status
+    // protected function translateStatus($status): string
+    // {
+    //     return match($status) {
+    //         'pending' => 'pendente',
+    //         'in_progress' => 'em progresso',
+    //         'completed' => 'completa',
+    //         // default => $status
+    //     };
+    // }
 }
