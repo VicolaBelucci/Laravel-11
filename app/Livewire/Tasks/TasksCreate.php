@@ -16,22 +16,35 @@ class TasksCreate extends Component
     
     public TaskForm $form;
 
+    public function mount()
+    {
+        $this->form->status = 'pending';
+    }
+
     public function save()
     {
         $createTask = $this->form->store();
         
         if($createTask){
-            $this->isOpen = false;
             $this->dispatch('refresh-table-create');
-            $this->form->reset();
+            $this->closeModal();
         }
 
+    }
+
+    public function openModal()
+    {
+        $this->isOpen = true;
+        $this->form->reset();
+        $this->resetValidation();
+        $this->reset('subTarefa');
     }
 
     public function closeModal()
     {
         $this->isOpen = false;
         $this->form->reset();
+        $this->resetValidation();
         $this->reset('subTarefa');
     }
 

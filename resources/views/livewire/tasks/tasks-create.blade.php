@@ -5,7 +5,7 @@
                 justify-content: space-between;
             }
         </style>
-        <button wire:click="$set('isOpen', true)"
+        <button wire:click="openModal"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Cadastrar Tarefa
         </button>
@@ -18,7 +18,7 @@
                 <div class="flex justify-between items-center mb-3">
                     <h2 class="text-xl font-bold">Criar Tarefa</h2>
                     <!-- Botão de Fechar -->
-                    <button wire:click="$set('isOpen', false)" class="text-black">&times;</button>
+                    <button wire:click="closeModal" class="text-black">&times;</button>
                 </div>
 
                 <!-- Corpo do Modal -->
@@ -55,15 +55,15 @@
                     <fieldset class="mb-4 flex justify-between">
                         <legend class="whitespace-nowrap text-gray-700 text-sm font-bold mb-2">Status:</legend>
                         <div class="flex items-center mb-1">
-                            <input type="radio" id="pending" wire:model.live="form.status" value="pending" class="mr-2" checked>
+                            <input type="radio" name="status" id="pending" wire:model.live="form.status" value="pending" class="mr-2" checked>
                             <label for="pending">Pendente</label>
                         </div>
                         <div class="flex items-center mb-1">
-                            <input type="radio" id="inProgress" wire:model.live="form.status" value="in_progress" class="mr-2">
+                            <input type="radio" name="status" id="inProgress" wire:model.live="form.status" value="in_progress" class="mr-2">
                             <label for="inProgress">Em Progresso</label>
                         </div>
                         <div class="flex items-center mb-1">
-                            <input type="radio" id="completed" wire:model.live="form.status" value="completed" class="mr-2">
+                            <input type="radio" name="status" id="completed" wire:model.live="form.status" value="completed" class="mr-2">
                             <label for="completed">Concluído</label>
                         </div>
                         <x-input-error :messages="$errors->get('form.status')" class="mt-2" />
@@ -111,7 +111,7 @@
 
                     <!-- Botão de Submissão -->
                     <div class="flex justify-between">
-                        <button wire:click="$set('isOpen', false)"
+                        <button wire:click="closeModal"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Fechar
                         </button>

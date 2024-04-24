@@ -17,6 +17,8 @@ class TasksUpdate extends Component
 
     public $isOpen = false;
 
+    public $dataToModal = false;
+
     public $subTarefa = 2; 
 
     #[On('edit-modal')]
@@ -41,6 +43,28 @@ class TasksUpdate extends Component
 
     }
 
+    #[On('show-modal')]
+    public function showModal($id)
+    {
+        $task = Task::find($id);
+        $this->dataToModal = true; 
+
+        if(!$task){
+            return redirect()->back(); // substituir por sweet alert
+        }
+
+        $this->task = $task;
+        $this->resetValidation();
+        $this->form->title = $task->title;
+        $this->form->description = $task->description;
+        $this->form->expirationDate = $task->expirationDate;
+        $this->form->status = $task->status;
+        $this->form->category = $task->category_id;
+        $this->subTarefa = $task->related_id ? 1 : 2;
+        $this->form->related_id = $task->related_id;
+        $this->isOpen = true;
+    }
+
     public function update()
     {
         $this->validate(); 
@@ -56,9 +80,7 @@ class TasksUpdate extends Component
 
         if($updateTask){
             $this->dispatch('refresh-table-edit');
-            $this->form->reset();
-            $this->reset('task', 'subTarefa');
-            $this->isOpen = false;
+            $this->closeModal();
         }
          
     }
@@ -67,7 +89,8 @@ class TasksUpdate extends Component
     {
         $this->isOpen = false;
         $this->form->reset();
-        $this->reset('task', 'subTarefa');
+        $this->resetValidation();
+        $this->reset('task', 'subTarefa', 'dataToModal');
     }
 
     #[Computed()]
