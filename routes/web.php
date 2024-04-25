@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Category\CategoryIndex;
 use App\Livewire\Tasks\TaskIndex;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/tasks', TaskIndex::class)->name('task.index');
+    Route::get('/categories', CategoryIndex::class)->name('category.index');
 });
 
 require __DIR__.'/auth.php';

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->unsignedBigInteger('related_id')->nullable();
             $table->foreign('related_id') 
                 ->references('id')       
-                ->on('tasks')            
+                ->on('categories')            
                 ->onDelete('cascade');  
 
             $table->timestamps();
