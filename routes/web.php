@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Category\CategoryIndex;
+use App\Livewire\Dashboard\DashboardIndex;
 use App\Livewire\Tasks\TaskIndex;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tasks', TaskIndex::class)->name('task.index');
     Route::get('/categories', CategoryIndex::class)->name('category.index');
+    Route::get('dashboardindex', DashboardIndex::class)->name('dashboard.index');
 });
 
 require __DIR__.'/auth.php';
