@@ -2,8 +2,13 @@
     <div class="py-12 flex justify-center">
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             <div class="relative">
-                <div class="bg-white min-h-96 max-h-96 overflow-y-auto dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                    <h2 class="p-6 pb-0 text-gray-900">Tarefas Em Progresso</h2>
+                <div class="bg-yellow-200 min-h-96 max-h-96 overflow-y-auto dark:bg-gray-800 shadow-sm sm:rounded-lg">
+                    <div class="p-6 pb-0 text-gray-900 bg-yellow-200">
+                        <h2 class="text-gray-900 font-bold text-xl">Tarefas Em Progresso</h2>
+                        <div class="border-b border-black"></div> <!-- Divisória -->
+                    </div>
+                    
+                    
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <!-- Conteúdo do card -->
                         <table class="min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -15,9 +20,9 @@
             
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="divide-y divide-black">
                                 @forelse($inProgressTasks as $task)
-                                <tr wire:key="task-{{$task->id}}">
+                                <tr wire:key="task-{{$task->id}}" class="{{ $loop->first ? 'border-t-0' : '' }} {{ $loop->last ? 'border-b-0' : '' }}">
                                     <td class="px-4 py-2">
                                         <input type="checkbox" id="other-task-{{$task->id}}" class="me-3" wire:change="changeStatus({{$task->id}}, 'pending')" @if($task->status === 'pending') checked @endif>
                                     </td>
