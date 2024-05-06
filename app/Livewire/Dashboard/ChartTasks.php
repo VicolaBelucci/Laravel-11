@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard;
 
 use App\Models\Task;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ChartTasks extends Component
@@ -16,23 +17,16 @@ class ChartTasks extends Component
 
     public $dataset = []; 
 
-    public function mount()
-    {
-        $this->loadProperties();
-        $this->fillDataset();
-    }
+    // public function mount()
+    // {
+    //     $this->loadProperties();
+    //     $this->fillDataset();
+    // }
 
     public function fillDataset()
     {
         $labels = ['Pendentes', 'Em Progresso', 'Completas'];
 
-
-        // $this->dataset['labels'] = $labels; 
-        // $this->dataset['values'] = [
-        //     $this->pendingdTasks_amount,
-        //     $this->inProgressTasks_amount,
-        //     $this->completedTasks_amount
-        // ];
         $this->dataset = [
             'labels' => ['Pendentes', 'Em Progresso', 'Completas'],
             'datasets' => [
@@ -51,8 +45,6 @@ class ChartTasks extends Component
                 ]
             ]
         ];
-
-        // dd($this->dataset);
 
     }
 
@@ -93,8 +85,11 @@ class ChartTasks extends Component
         return $completedTasks; 
     }
 
+    #[On('atualization-tasks')]
     public function render()
     {
+        $this->loadProperties();
+        $this->fillDataset();
         return view('livewire.dashboard.chart-tasks');
     }
 }

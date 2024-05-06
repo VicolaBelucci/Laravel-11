@@ -42,6 +42,7 @@ class CompletedTasks extends Component
                 $this->dispatch('atualization-tasks')->to(InProgressTasks::class);
             }
             
+            $this->dispatch('atualization-tasks')->to(ChartTasks::class);
            
         }
     }

@@ -41,6 +41,8 @@ class PendingTasks extends Component
             }else{
                 $this->dispatch('atualization-tasks')->to(CompletedTasks::class);
             }
+
+            $this->dispatch('atualization-tasks')->to(ChartTasks::class);
         }
     }
 
