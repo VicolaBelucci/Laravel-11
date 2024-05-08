@@ -1,22 +1,30 @@
-<div>
-    <div class="w-full">
-        <div class="py-12 flex justify-center">
-            <div class=" w-full mx-auto sm:px-6 lg:px-8">
-                <div class="relative">
-                    <div class="bg-white overflow-y-auto dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                        <h2 class="p-6 pb-0 text-gray-900">Gráfico Tarefas</h2>
-                        <div x-data="chart" class="p-6 text-gray-900 dark:text-gray-100 max-h-80 w-full" wire:ignore>
-                            <!-- Conteúdo do card -->
-                            <canvas id="myChart"></canvas>
-                        </div>
-                    </div>
-                    <div wire:loading class="absolute inset-0 bg-white bg-opacity-50">
+<div class="py-12 overflow-x-auto">
+  
+  <!-- Bar chart card -->
+  <div class="col-span-2 bg-white rounded-md w-[544px]  dark:bg-darker">
     
-                </div>
-            </div>
-        </div>
+    <!-- Card header -->
+    <div class="flex items-center justify-between p-4 border-b dark:border-primary">
+      <h4 class="text-lg font-semibold text-gray-500 dark:text-light">Bar Chart</h4>
     </div>
+
+    <!-- Chart -->
+    <div class="relative">
+      
+      <div x-data="chart" class="p-6 text-gray-900 dark:text-gray-100 max-h-80 w-[544px] " wire:ignore>
+        <!-- Conteúdo do card -->
+        <canvas id="myChart"></canvas>
+      </div>
+      
+      <div wire:loading class="absolute inset-0 bg-white bg-opacity-50">
+    
+      </div>
+
+    </div>
+  </div>
 </div>
+
+
 
 @assets
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
