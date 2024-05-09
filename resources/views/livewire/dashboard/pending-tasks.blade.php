@@ -1,7 +1,7 @@
 <div>
-    <div class="py-3 flex justify-center">
+    <div class="py-3 flex justify-center ">
         <div class="w-full mx-auto sm:px-6 lg:px-8">
-            <div class="relative">
+            <div class="relative ">
             
                 @forelse($pendingTasks as $task)
                     <div wire:key="task-{{$task->id}}" class="flex">
