@@ -67,12 +67,9 @@
                     <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
                     <a
                       href="{{route('dashboard.index')}}"
-                      @click="$event.preventDefault(); open = !open"
                       class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                      :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
                       role="button"
-                      aria-haspopup="true"
-                      :aria-expanded="(open || isActive) ? 'true' : 'false'"
+                      wire:navigate
                     >
                       <span aria-hidden="true">
                         <svg
@@ -141,14 +138,6 @@
                     <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" arial-label="Components">
                       <!-- active & hover classes 'text-gray-700 dark:text-light' -->
                       <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
-                      <a
-                        href="{{route('dashboard.index')}}"
-                        role="menuitem"
-                        class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
-                        wire:navigate 
-                      >
-                        Dashboard
-                      </a>
                       <a
                         href="{{route('task.index')}}"
                         role="menuitem"
@@ -346,26 +335,21 @@
                         aria-label="User menu"
                       >
                         <a
-                          href="#"
+                          href="{{route('profile.edit')}}"
                           role="menuitem"
                           class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
                         >
-                          Your Profile
+                          Perfil
                         </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
-                        >
-                          Settings
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
-                        >
-                          Logout
-                        </a>
+
+                        <form method="POST" action="{{ route('logout') }}" class="block">
+                          @csrf
+                          <button type="submit"
+                                  class="w-full text-left px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary">
+                              {{ __('Log Out') }}
+                          </button>
+                        </form>
+                        
                       </div>
                     </div>
                   </nav>
@@ -460,7 +444,28 @@
                         class="block transition-opacity duration-200 rounded-full dark:opacity-75 dark:hover:opacity-100 focus:outline-none focus:ring dark:focus:opacity-100"
                       >
                         <span class="sr-only">User menu</span>
-                        <img class="w-10 h-10 rounded-full" src="build/images/avatar.jpg" alt="Ahmed Kamel" />
+                        <span class="sr-only">Open settings panel</span>
+                      <svg
+                        class="w-7 h-7"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
                       </button>
     
                       <!-- User dropdown menu -->
@@ -478,27 +483,22 @@
                         aria-orientation="vertical"
                         aria-label="User menu"
                       >
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
-                        >
-                          Your Profile
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
-                        >
-                          Settings
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
-                        >
-                          Logout
-                        </a>
+                      <a
+                        href="{{route('profile.edit')}}"
+                        role="menuitem"
+                        class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary"
+                      >
+                        Perfil
+                      </a>
+
+                      <form method="POST" action="{{ route('logout') }}" class="block">
+                        @csrf
+                        <button type="submit"
+                                class="w-full text-left px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-light dark:hover:bg-primary">
+                            {{ __('Log Out') }}
+                        </button>
+                      </form>
+                        
                       </div>
                     </div>
                   </nav>
@@ -514,13 +514,10 @@
                     <div x-data="{ isActive: true, open: true}">
                       <!-- active & hover classes 'bg-primary-100 dark:bg-primary' -->
                       <a
-                        href="#"
-                        @click="$event.preventDefault(); open = !open"
+                        href="{{route('dashboard.index')}}"
                         class="flex items-center p-2 text-gray-500 transition-colors rounded-md dark:text-light hover:bg-primary-100 dark:hover:bg-primary"
-                        :class="{'bg-primary-100 dark:bg-primary': isActive || open}"
                         role="button"
-                        aria-haspopup="true"
-                        :aria-expanded="(open || isActive) ? 'true' : 'false'"
+                        wire:navigate
                       >
                         <span aria-hidden="true">
                           <svg
@@ -553,31 +550,7 @@
                           </svg>
                         </span>
                       </a>
-                      <div role="menu" x-show="open" class="mt-2 space-y-2 px-7" aria-label="Dashboards">
-                        <!-- active & hover classes 'text-gray-700 dark:text-light' -->
-                        <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
-                        <a
-                          href="index.html"
-                          role="menuitem"
-                          class="block p-2 text-sm text-gray-700 transition-colors duration-200 rounded-md dark:text-light dark:hover:text-light hover:text-gray-700"
-                        >
-                          Default
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                        >
-                          Project Mangement (soon)
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                        >
-                          E-Commerce (soon)
-                        </a>
-                      </div>
+
                     </div>
     
                     <!-- Components links -->
@@ -626,55 +599,23 @@
                       <div x-show="open" class="mt-2 space-y-2 px-7" role="menu" arial-label="Components">
                         <!-- active & hover classes 'text-gray-700 dark:text-light' -->
                         <!-- inActive classes 'text-gray-400 dark:text-gray-400' -->
+                        
                         <a
-                          href="#"
+                          href="{{route('task.index')}}"
                           role="menuitem"
                           class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                         >
-                          Alerts (soon)
+                          Tarefas
                         </a>
+
                         <a
-                          href="#"
+                          href="{{route('category.index')}}"
                           role="menuitem"
                           class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:text-gray-400 dark:hover:text-light hover:text-gray-700"
                         >
-                          Buttons (soon)
+                          Categorias
                         </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                        >
-                          Cards (soon)
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                        >
-                          Dropdowns (soon)
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                        >
-                          Forms (soon)
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                        >
-                          Lists (soon)
-                        </a>
-                        <a
-                          href="#"
-                          role="menuitem"
-                          class="block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700"
-                        >
-                          Modals (soon)
-                        </a>
+                        
                       </div>
                     </div>
     
@@ -682,7 +623,12 @@
                   </nav>
                 </div>
               </header>
-    
+
+              <div class="ps-8 pt-4 rounded-full">
+                @if(isset($categoryFilter))
+                  @livewire('tasks.tasks-filter-category')
+                @endif
+              </div>
               <!-- Main content -->
                 <main>
                     {{ $slot }}
