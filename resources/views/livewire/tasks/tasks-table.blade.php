@@ -1,5 +1,4 @@
 <div>
-
     <div class="flex justify-between items-center mb-6">
         <p class="text-2xl font-bold">Tarefas</p>
         <div class="flex">
