@@ -3,6 +3,7 @@
 namespace App\Livewire\Tasks;
 
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Sleep;
 use Livewire\Attributes\On;
@@ -17,7 +18,11 @@ class TasksTable extends Component
 
     public $search; 
 
-    public $userId; 
+    public $userId;
+    
+    public $categoryForFilter = null;
+
+    public $monthForFilter = null;
 
     public function mount()
     {
@@ -41,6 +46,18 @@ class TasksTable extends Component
         return $translations[$status] ?? $status;
     }
 
+    #[On('category-changed')]
+    public function categoryFilter($category)
+    {
+        $this->categoryForFilter = $category;
+    }
+
+    #[On('month-changed')]
+    public function monthFilter($month)
+    {
+        $this->monthForFilter = $month;
+    }
+
     #[On('refresh-table-create')]
     #[On('refresh-table-edit')]
     #[On('refresh-table-delete')]
@@ -50,6 +67,16 @@ class TasksTable extends Component
             ->join('categories', 'tasks.category_id', '=', 'categories.id')
             ->select('tasks.*', 'categories.title as category_title', 'categories.description as category_description')
             ->where('tasks.user_id', $this->userId);
+
+        if (!is_null($this->categoryForFilter)) {
+            $query->where('categories.id', $this->categoryForFilter);
+        }
+
+        if (!is_null($this->monthForFilter)) {
+            $startOfMonth = Carbon::createFromFormat('m-Y', $this->monthForFilter)->startOfMonth();
+            $endOfMonth = Carbon::createFromFormat('m-Y', $this->monthForFilter)->endOfMonth();
+            $query->whereBetween('tasks.expirationDate', [$startOfMonth, $endOfMonth]);
+        }
 
         if (!empty($this->search)) {
             $query->where(function ($query) {

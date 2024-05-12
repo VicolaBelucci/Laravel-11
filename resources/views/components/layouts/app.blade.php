@@ -624,9 +624,13 @@
                 </div>
               </header>
 
-              <div class="ps-8 pt-4 rounded-full">
+              <div class="ps-8 pt-4 gap-2 rounded-full flex">
                 @if(isset($categoryFilter))
                   @livewire('tasks.tasks-filter-category')
+                @endif
+                
+                @if(isset($DateFilter))
+                  @livewire('tasks.tasks-filter-date')
                 @endif
               </div>
               <!-- Main content -->

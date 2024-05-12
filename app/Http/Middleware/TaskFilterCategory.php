@@ -23,6 +23,7 @@ class TaskFilterCategory
         if (isset($currentRouteName) && in_array($currentRouteName, $routesToShow)) {
 
             view()->share('categoryFilter', true);
+            view()->share('DateFilter', true);
         }
 
         return $next($request);

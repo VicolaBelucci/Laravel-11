@@ -4,6 +4,7 @@ namespace App\Livewire\Tasks;
 
 use App\Models\Task;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class TasksFilterCategory extends Component
@@ -29,9 +30,13 @@ class TasksFilterCategory extends Component
 
     public function updatedSelectedCategory()
     {
+        $this->selectedCategory = $this->selectedCategory === '' ? null : $this->selectedCategory;
         $this->dispatch('category-changed', category: $this->selectedCategory);
     }
 
+    #[On('refresh-table-create')]
+    #[On('refresh-table-edit')]
+    #[On('refresh-table-delete')]
     public function render()
     {
         $this->getCategories();
