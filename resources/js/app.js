@@ -5,3 +5,7 @@ import './bootstrap';
 // window.Alpine = Alpine;
 
 // Alpine.start();
+
+import Sortablejs from 'sortablejs';
+
+window.Sortablejs = Sortablejs;
